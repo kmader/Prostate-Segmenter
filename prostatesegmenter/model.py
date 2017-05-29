@@ -19,3 +19,10 @@ class CNNModel(object):
         print("Predicting the labelmap.")
         test_slices_prediction = self.model.predict(test_slices_arr, verbose=1)
         return test_slices_prediction
+ 
+    def train(self, input_train_slices, input_train_segmentations, **kw_args):
+        print("Preprocessing data.")
+        train_slices_arr = self.preprocess(input_train_slices, self.mean_val, self.max_val)
+        print("Training on the labelmap.")
+        return self.model.fit(train_slices_arr, input_train_segmentations, verbose=1, shuffle = True, **kw_args)
+
